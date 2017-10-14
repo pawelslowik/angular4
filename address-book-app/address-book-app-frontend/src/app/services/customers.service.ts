@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '../classes/customer';
+import { CustomersResponse } from '../classes/customers-response';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -11,9 +12,9 @@ export class CustomersService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getCustomers(): Observable<Customer[]> {
+  getCustomers(page: number, pageSize: number): Observable<CustomersResponse> {
     return this.httpClient
-    .get<Customer[]>("http://localhost:8080/addressbook/customers")
+    .get<CustomersResponse>("http://localhost:8080/addressbook/customers?" + "page=" + page + "&pageSize=" + pageSize)
     .do(data => console.log("Received customers=" + JSON.stringify(data)))
     .catch(this.handleError);
   }

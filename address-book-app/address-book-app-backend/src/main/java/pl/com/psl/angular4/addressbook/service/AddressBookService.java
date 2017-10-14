@@ -3,6 +3,7 @@ package pl.com.psl.angular4.addressbook.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import pl.com.psl.angular4.addressbook.entity.Customer;
 import pl.com.psl.angular4.addressbook.entity.Employee;
@@ -49,6 +50,22 @@ public class AddressBookService {
         all.forEach(customers::add);
         LOG.info("Got customers={}", customers);
         return customers;
+    }
+
+    public List<Customer> getCustomers(int page, int size){
+        LOG.info("Getting all customers page={} with size={}...", page, size);
+        Iterable<Customer> all = customerRepository.findAll(new PageRequest(page, size));
+        List<Customer> customers = new ArrayList<>();
+        all.forEach(customers::add);
+        LOG.info("Got customers={}", customers);
+        return customers;
+    }
+
+    public long countCustomers(){
+        LOG.info("Counting all customers...");
+        long count = customerRepository.count();
+        LOG.info("Counted {} customers", count);
+        return count;
     }
 
     public List<Employee> getEmployees(){

@@ -5,14 +5,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.com.psl.angular4.addressbook.entity.Customer;
 import pl.com.psl.angular4.addressbook.entity.Employee;
 import pl.com.psl.angular4.addressbook.service.AddressBookService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +25,17 @@ public class AddressBookController {
     private AddressBookService addressBookService;
 
     @RequestMapping(path = "/customers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public HttpEntity<List<Customer>> getCustomers(){
-        return new ResponseEntity<>(addressBookService.getCustomers(), HttpStatus.OK);
+    public HttpEntity<CustomersResponse> getCustomers(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
+        List<Customer> customers;
+        long totalCount = addressBookService.countCustomers();
+        if(page != null && pageSize != null){
+            customers = addressBookService.getCustomers(page, pageSize);
+        }
+        else{
+            customers = addressBookService.getCustomers();
+        }
+        CustomersResponse customersResponse = new CustomersResponse(page, totalCount, customers);
+        return new ResponseEntity<>(customersResponse, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/employees", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

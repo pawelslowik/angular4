@@ -2,24 +2,51 @@
   <div class="card-header">
     Customers addresses
   </div>
+
   <div class="card-block">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Phone number</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let customer of customers">
-            <td>{{ customer.customerId }}</td>
-            <td>{{ customer.name }}</td>
-            <td>{{ customer.address }}</td>
-            <td>{{ customer.phoneNumber }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <nav *ngIf="customers">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <ul class="pagination float-left">
+              <li class="page-item disabled">
+                <span class="page-link">Page</span>
+              </li>
+              <li class="page-item" *ngFor="let page of pages" [ngClass]="{'active' : page == currentPage }">
+                <span class="page-link" (click)="loadPage(page)">{{ page + 1 }}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <ul class="pagination float-right">
+              <li class="page-item disabled">
+                <span class="page-link">Page size</span>
+              </li>
+              <li class="page-item" *ngFor="let pageSize of pageSizes" [ngClass]="{'active' : pageSize == currentPageSize }">
+                <span class="page-link" (click)="loadPageSize(pageSize)">{{ pageSize }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Phone number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers">
+          <td>{{ customer.customerId }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.address }}</td>
+          <td>{{ customer.phoneNumber }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
