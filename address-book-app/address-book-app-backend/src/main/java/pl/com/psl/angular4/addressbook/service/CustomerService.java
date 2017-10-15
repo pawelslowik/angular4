@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.com.psl.angular4.addressbook.entity.Customer;
 import pl.com.psl.angular4.addressbook.repository.CustomerRepository;
+import pl.com.psl.angular4.addressbook.util.RandomCustomerGenerator;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
@@ -18,19 +19,18 @@ import java.util.List;
 public class CustomerService extends AddressBookService<Customer>{
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomerService.class);
+    private final RandomCustomerGenerator randomCustomerGenerator;
 
     @Autowired
-    public CustomerService(CustomerRepository repository) {
+    public CustomerService(CustomerRepository repository, RandomCustomerGenerator randomCustomerGenerator) {
         super(repository);
+        this.randomCustomerGenerator = randomCustomerGenerator;
     }
 
     @PostConstruct
     public void init() {
         LOG.info("Initializing customer data");
-        List<Customer> customers = Arrays.asList(
-                new Customer("bob", "wroclaw", "111 111 111"),
-                new Customer("tom", "warsaw", "222 222 222")
-        );
+        List<Customer> customers = randomCustomerGenerator.generate(100);
         customers.forEach(repository::save);
         LOG.info("Customer data initialization finished");
     }
