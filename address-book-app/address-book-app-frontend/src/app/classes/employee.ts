@@ -1,5 +1,6 @@
 export class Employee {
-    employeeId: number;
+    id: number;
+    employeeId: string;
     name: string;
     address: string;
     office: string;

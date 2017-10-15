@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.com.psl.angular4.addressbook.entity.Employee;
 import pl.com.psl.angular4.addressbook.repository.EmployeeRepository;
+import pl.com.psl.angular4.addressbook.util.RandomEmployeeGenerator;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
@@ -18,16 +19,18 @@ import java.util.List;
 public class EmployeeService extends AddressBookService<Employee> {
 
     private static final Logger LOG = LoggerFactory.getLogger(EmployeeService.class);
+    private final RandomEmployeeGenerator randomEmployeeGenerator;
 
     @Autowired
-    EmployeeService(EmployeeRepository repository) {
+    EmployeeService(EmployeeRepository repository, RandomEmployeeGenerator randomEmployeeGenerator) {
         super(repository);
+        this.randomEmployeeGenerator = randomEmployeeGenerator;
     }
 
     @PostConstruct
     public void init() {
         LOG.info("Initializing employee data");
-        List<Employee> employees = Arrays.asList(new Employee("max", "gdansk", "warsaw office", "333 333 333", "max@company.com"));
+        List<Employee> employees = randomEmployeeGenerator.generate(60);
         employees.forEach(repository::save);
         LOG.info("Employee data initialization finished");
     }

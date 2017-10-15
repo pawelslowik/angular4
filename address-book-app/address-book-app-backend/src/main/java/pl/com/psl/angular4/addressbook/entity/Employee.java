@@ -12,7 +12,8 @@ public class Employee {
 
     @Id
     @GeneratedValue
-    private Long employeeId;
+    private Long id;
+    private String employeeId;
     private String name;
     private String address;
     private String office;
@@ -22,15 +23,20 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String name, String address, String office, String phoneNumber, String email) {
+    public Employee(String employeeId, String name, String address, String office, String phoneNumber) {
+        this.employeeId = employeeId;
         this.name = name;
         this.address = address;
         this.office = office;
         this.phoneNumber = phoneNumber;
-        this.email = email;
+        this.email = employeeId + "@company.com";
     }
 
-    public Long getEmployeeId() {
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmployeeId() {
         return employeeId;
     }
 
@@ -57,7 +63,8 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "employeeId=" + employeeId +
+                "id=" + id +
+                ", employeeId='" + employeeId + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", office='" + office + '\'' +
