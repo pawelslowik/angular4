@@ -4,5 +4,5 @@ export class CustomersResponse {
     page: number;
     pageSize: number;
     totalCount: number;
-    customers: Customer[];
+    entities: Customer[];
 }

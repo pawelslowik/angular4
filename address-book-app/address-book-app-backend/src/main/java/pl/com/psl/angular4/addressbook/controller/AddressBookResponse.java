@@ -1,24 +1,22 @@
 package pl.com.psl.angular4.addressbook.controller;
 
-import pl.com.psl.angular4.addressbook.entity.Customer;
-
 import java.util.List;
 
 /**
  * Created by psl on 14.10.17
  */
-public class CustomersResponse {
+public class AddressBookResponse<T> {
 
     private int page;
     private int pageSize;
     private long totalCount;
-    private List<Customer> customers;
+    private List<T> entities;
 
-    public CustomersResponse(int page, long totalCount, List<Customer> customers) {
+    public AddressBookResponse(int page, long totalCount, List<T> entities) {
         this.page = page;
-        this.pageSize = customers.size();
+        this.pageSize = entities.size();
         this.totalCount = totalCount;
-        this.customers = customers;
+        this.entities = entities;
     }
 
     public int getPage() {
@@ -33,7 +31,7 @@ public class CustomersResponse {
         return totalCount;
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public List<T> getEntities() {
+        return entities;
     }
 }

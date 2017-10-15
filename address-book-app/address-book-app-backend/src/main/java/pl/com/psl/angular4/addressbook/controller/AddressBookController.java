@@ -11,8 +11,6 @@ import pl.com.psl.angular4.addressbook.entity.Employee;
 import pl.com.psl.angular4.addressbook.service.CustomerService;
 import pl.com.psl.angular4.addressbook.service.EmployeeService;
 
-import java.util.List;
-
 /**
  * Created by psl on 12.10.17
  */
@@ -27,21 +25,26 @@ public class AddressBookController {
     private EmployeeService employeeService;
 
     @RequestMapping(path = "/customers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public HttpEntity<CustomersResponse> getCustomers(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
-        List<Customer> customers;
+    public HttpEntity<AddressBookResponse<Customer>> getCustomers(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize) {
+        AddressBookResponse<Customer> addressBookResponse;
         long totalCount = customerService.countCustomers();
-        if(page != null && pageSize != null){
-            customers = customerService.getCustomers(page, pageSize);
+        if (page != null && pageSize != null) {
+            addressBookResponse = new AddressBookResponse<>(page, totalCount, customerService.getCustomers(page, pageSize));
+        } else {
+            addressBookResponse = new AddressBookResponse<>(0, totalCount, customerService.getCustomers());
         }
-        else{
-            customers = customerService.getCustomers();
-        }
-        CustomersResponse customersResponse = new CustomersResponse(page, totalCount, customers);
-        return new ResponseEntity<>(customersResponse, HttpStatus.OK);
+        return new ResponseEntity<>(addressBookResponse, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/employees", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<List<Employee>> getEmployees(){
-        return new ResponseEntity<>(employeeService.getEmployees(), HttpStatus.OK);
+    public HttpEntity<AddressBookResponse<Employee>> getEmployees(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize) {
+        AddressBookResponse<Employee> addressBookResponse;
+        long totalCount = employeeService.countEmployees();
+        if (page != null && pageSize != null) {
+            addressBookResponse = new AddressBookResponse<>(page, totalCount, employeeService.getEmployees(page, pageSize));
+        } else {
+            addressBookResponse = new AddressBookResponse<>(0, totalCount, employeeService.getEmployees());
+        }
+        return new ResponseEntity<>(addressBookResponse, HttpStatus.OK);
     }
 }

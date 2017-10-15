@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Employee } from '../classes/employee';
+import { EmployeesResponse } from '../classes/employees-response';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -11,10 +11,10 @@ export class EmployeesService {
 
   constructor(private httpClient:HttpClient) { }
 
-  getEmployees(): Observable<Employee[]>{
+  getEmployees(): Observable<EmployeesResponse>{
     return this.httpClient
-    .get<Employee[]>("http://localhost:8080/addressbook/employees")
-    .do(data => console.log("Received customers=" + JSON.stringify(data)))
+    .get<EmployeesResponse>("http://localhost:8080/addressbook/employees")
+    .do(data => console.log("Received employees=" + JSON.stringify(data)))
     .catch(this.handleError);
   }
 

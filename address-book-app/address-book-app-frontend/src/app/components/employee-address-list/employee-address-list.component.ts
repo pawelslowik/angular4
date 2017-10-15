@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable }    from '@angular/core';
+import { Headers, Http } from '@angular/http';
 import { Employee } from '../../classes/employee';
+import { EmployeesResponse } from '../../classes/employees-response';
 import { EmployeesService } from '../../services/employees.service';
 
 @Component({
@@ -20,6 +22,10 @@ export class EmployeeAddressListComponent implements OnInit {
   }
 
   getEmployees(): void {
-    this.employeesService.getEmployees().subscribe(employees => this.employees = employees);
+    this.employeesService.getEmployees()
+    .subscribe(employeesResponse => {
+      this.employees = employeesResponse.entities
+      console.log("Setting employees=" + employeesResponse.entities);
+    });
   }
 }
