@@ -1,8 +1,11 @@
 <div class="card">
-  <div class="card-header">
-    Customers addresses
+  <div class="card-header" [ngPlural]="totalCount">
+    Found address of {{ totalCount }} 
+    <span>
+      <ng-template ngPluralCase="1">customer</ng-template>
+      <ng-template ngPluralCase="other">customers</ng-template>
+    </span>
   </div>
-
   <div class="card-block">
     <nav *ngIf="customers">
       <div class="container">

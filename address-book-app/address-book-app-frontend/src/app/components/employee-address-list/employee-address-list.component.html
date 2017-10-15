@@ -1,6 +1,9 @@
 <div class="card">
-  <div class="card-header">
-    Employees addresses
+  <div class="card-header" [ngPlural]="totalCount">
+    Found address of {{ totalCount }} <span>
+      <ng-template ngPluralCase="1">employee</ng-template>
+      <ng-template ngPluralCase="other">employees</ng-template>
+    </span>
   </div>
   <div class="card-block">
       <table class="table">

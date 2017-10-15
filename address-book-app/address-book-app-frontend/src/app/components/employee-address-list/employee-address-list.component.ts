@@ -14,6 +14,7 @@ import { EmployeesService } from '../../services/employees.service';
 export class EmployeeAddressListComponent implements OnInit {
 
   employees: Employee[];
+  totalCount: number;
 
   constructor(private employeesService: EmployeesService) { }
 
@@ -25,7 +26,7 @@ export class EmployeeAddressListComponent implements OnInit {
     this.employeesService.getEmployees()
     .subscribe(employeesResponse => {
       this.employees = employeesResponse.entities
-      console.log("Setting employees=" + employeesResponse.entities);
+      this.totalCount = employeesResponse.totalCount;
     });
   }
 }

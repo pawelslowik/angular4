@@ -18,6 +18,7 @@ export class CustomerAddressListComponent implements OnInit {
     currentPage: number = 0;
     currentPageSize: number = this.pageSizes[0];
     pages: number[];
+    totalCount: number;
 
     constructor(private customersService: CustomersService) { }
   
@@ -39,6 +40,7 @@ export class CustomerAddressListComponent implements OnInit {
       this.customersService.getCustomers(page, pageSize)
       .subscribe(customersResponse => {
         this.customers = customersResponse.entities;
+        this.totalCount = customersResponse.totalCount;
         let pagesCount = Math.ceil(customersResponse.totalCount/pageSize);
         this.pages = Array(pagesCount).fill(0).map((x, i) => i);
       });
