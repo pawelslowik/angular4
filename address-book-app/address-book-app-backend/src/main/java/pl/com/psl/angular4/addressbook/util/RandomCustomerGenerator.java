@@ -13,6 +13,6 @@ public class RandomCustomerGenerator extends RandomEntityGenerator<Customer> {
 
     @Override
     public Supplier<Customer> supplyRandomEntity() {
-        return (() -> new Customer(generateName(), generateAddress(), generatePhoneNumber()));
+        return (() -> new Customer(generateEntityId("CUS-"), generateName(), generateAddress(), generatePhoneNumber()));
     }
 }

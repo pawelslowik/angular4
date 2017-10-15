@@ -12,7 +12,8 @@ public class Customer {
 
     @Id
     @GeneratedValue
-    private Long customerId;
+    private Long id;
+    private String customerId;
     private String name;
     private String address;
     private String phoneNumber;
@@ -20,13 +21,18 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String name, String address, String phoneNumber) {
+    public Customer(String customerId, String name, String address, String phoneNumber) {
+        this.customerId = customerId;
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
     }
 
-    public Long getCustomerId() {
+    public Long getId() {
+        return id;
+    }
+
+    public String getCustomerId() {
         return customerId;
     }
 
@@ -45,7 +51,8 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "customerId=" + customerId +
+                "id=" + id +
+                ", customerId='" + customerId + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
