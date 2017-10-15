@@ -11,9 +11,9 @@ export class EmployeesService {
 
   constructor(private httpClient:HttpClient) { }
 
-  getEmployees(): Observable<EmployeesResponse>{
+  getEmployees(page: number, pageSize: number): Observable<EmployeesResponse>{
     return this.httpClient
-    .get<EmployeesResponse>("http://localhost:8080/addressbook/employees")
+    .get<EmployeesResponse>("http://localhost:8080/addressbook/employees?" + "page=" + page + "&pageSize=" + pageSize)
     .do(data => console.log("Received employees=" + JSON.stringify(data)))
     .catch(this.handleError);
   }
