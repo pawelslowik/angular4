@@ -13,7 +13,7 @@ import { CustomersService } from '../../services/customers.service';
 })
 export class CustomerAddressListComponent implements OnInit {
 
-    pageSizes: number[] = [1, 20, 50];
+    pageSizes: number[] = [10, 20, 50];
     customers: Customer[];
     currentPage: number = 0;
     currentPageSize: number = this.pageSizes[0];
