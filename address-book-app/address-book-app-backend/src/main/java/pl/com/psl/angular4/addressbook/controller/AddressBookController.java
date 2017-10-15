@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.com.psl.angular4.addressbook.entity.Customer;
 import pl.com.psl.angular4.addressbook.entity.Employee;
-import pl.com.psl.angular4.addressbook.service.AddressBookService;
+import pl.com.psl.angular4.addressbook.service.CustomerService;
+import pl.com.psl.angular4.addressbook.service.EmployeeService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,17 +22,19 @@ import java.util.List;
 public class AddressBookController {
 
     @Autowired
-    private AddressBookService addressBookService;
+    private CustomerService customerService;
+    @Autowired
+    private EmployeeService employeeService;
 
     @RequestMapping(path = "/customers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<CustomersResponse> getCustomers(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize){
         List<Customer> customers;
-        long totalCount = addressBookService.countCustomers();
+        long totalCount = customerService.countCustomers();
         if(page != null && pageSize != null){
-            customers = addressBookService.getCustomers(page, pageSize);
+            customers = customerService.getCustomers(page, pageSize);
         }
         else{
-            customers = addressBookService.getCustomers();
+            customers = customerService.getCustomers();
         }
         CustomersResponse customersResponse = new CustomersResponse(page, totalCount, customers);
         return new ResponseEntity<>(customersResponse, HttpStatus.OK);
@@ -40,6 +42,6 @@ public class AddressBookController {
 
     @RequestMapping(path = "/employees", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<List<Employee>> getEmployees(){
-        return new ResponseEntity<>(addressBookService.getEmployees(), HttpStatus.OK);
+        return new ResponseEntity<>(employeeService.getEmployees(), HttpStatus.OK);
     }
 }
