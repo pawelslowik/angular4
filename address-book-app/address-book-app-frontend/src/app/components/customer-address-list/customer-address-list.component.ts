@@ -37,7 +37,7 @@ export class CustomerAddressListComponent implements OnInit {
     }
 
     getCustomers(page: number, pageSize: number): void {
-      this.customersService.getCustomers(page, pageSize)
+      this.customersService.getResponse(page, pageSize)
       .subscribe(customersResponse => {
         this.customers = customersResponse.entities;
         this.totalCount = customersResponse.totalCount;

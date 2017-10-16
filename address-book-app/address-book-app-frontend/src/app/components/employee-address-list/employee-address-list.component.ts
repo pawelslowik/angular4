@@ -37,7 +37,7 @@ export class EmployeeAddressListComponent implements OnInit {
   }
 
   getEmployees(page: number, pageSize: number): void {
-    this.employeesService.getEmployees(page, pageSize)
+    this.employeesService.getResponse(page, pageSize)
       .subscribe(employeesResponse => {
         this.employees = employeesResponse.entities;
         this.totalCount = employeesResponse.totalCount;
