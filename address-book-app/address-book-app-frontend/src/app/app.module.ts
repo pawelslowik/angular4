@@ -7,12 +7,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { CustomerAddressListComponent } from './components/customer-address-list/customer-address-list.component';
 import { EmployeeAddressListComponent } from './components/employee-address-list/employee-address-list.component';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { FormatPhonePipe } from './pipes/format-phone.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomerAddressListComponent,
-    EmployeeAddressListComponent
+    EmployeeAddressListComponent,
+    CapitalizePipe,
+    FormatPhonePipe
   ],
   imports: [
     BrowserModule,

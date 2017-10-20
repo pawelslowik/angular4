@@ -19,6 +19,7 @@ export class EmployeeAddressListComponent implements OnInit {
   currentPageSize: number = this.pageSizes[0];
   pages: number[];
   totalCount: number;
+  error: string;
 
   constructor(private employeesService: EmployeesService) { }
 
@@ -38,11 +39,19 @@ export class EmployeeAddressListComponent implements OnInit {
 
   getEmployees(page: number, pageSize: number): void {
     this.employeesService.getResponse(page, pageSize)
-      .subscribe(employeesResponse => {
+      .subscribe(
+      employeesResponse => {
         this.employees = employeesResponse.entities;
         this.totalCount = employeesResponse.totalCount;
         let pagesCount = Math.ceil(employeesResponse.totalCount / pageSize);
         this.pages = Array(pagesCount).fill(0).map((x, i) => i);
-      });
+        this.error = undefined;
+      },
+      error => {
+        this.error = error;
+        this.employees = undefined;
+        this.totalCount = 0;
+      }
+      );
   }
 }

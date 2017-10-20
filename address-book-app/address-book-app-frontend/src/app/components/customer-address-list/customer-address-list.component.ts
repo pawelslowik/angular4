@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Injectable }    from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Customer } from '../../classes/customer';
 import { CustomersResponse } from '../../classes/customers-response';
@@ -13,36 +13,44 @@ import { CustomersService } from '../../services/customers.service';
 })
 export class CustomerAddressListComponent implements OnInit {
 
-    pageSizes: number[] = [10, 20, 50];
-    customers: Customer[];
-    currentPage: number = 0;
-    currentPageSize: number = this.pageSizes[0];
-    pages: number[];
-    totalCount: number;
+  pageSizes: number[] = [10, 20, 50];
+  customers: Customer[];
+  currentPage: number = 0;
+  currentPageSize: number = this.pageSizes[0];
+  pages: number[];
+  totalCount: number;
+  error: string;
 
-    constructor(private customersService: CustomersService) { }
-  
-    ngOnInit() {
-      this.getCustomers(this.currentPage, this.currentPageSize);
-    }
-     
-    loadPage(page: number): void {
-      this.currentPage = page;
-      this.getCustomers(this.currentPage, this.currentPageSize);
-    }
+  constructor(private customersService: CustomersService) { }
 
-    loadPageSize(pageSize: number): void {
-      this.currentPageSize = pageSize;
-      this.loadPage(0);
-    }
+  ngOnInit() {
+    this.getCustomers(this.currentPage, this.currentPageSize);
+  }
 
-    getCustomers(page: number, pageSize: number): void {
-      this.customersService.getResponse(page, pageSize)
-      .subscribe(customersResponse => {
+  loadPage(page: number): void {
+    this.currentPage = page;
+    this.getCustomers(this.currentPage, this.currentPageSize);
+  }
+
+  loadPageSize(pageSize: number): void {
+    this.currentPageSize = pageSize;
+    this.loadPage(0);
+  }
+
+  getCustomers(page: number, pageSize: number): void {
+    this.customersService.getResponse(page, pageSize)
+      .subscribe(
+      customersResponse => {
         this.customers = customersResponse.entities;
         this.totalCount = customersResponse.totalCount;
-        let pagesCount = Math.ceil(customersResponse.totalCount/pageSize);
+        let pagesCount = Math.ceil(customersResponse.totalCount / pageSize);
         this.pages = Array(pagesCount).fill(0).map((x, i) => i);
-      });
+      },
+      error => {
+        this.error = error;
+        this.customers = undefined;
+        this.totalCount = 0;
+      }
+      );
   }
 }

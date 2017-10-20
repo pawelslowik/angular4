@@ -6,8 +6,8 @@
       <ng-template ngPluralCase="other">employees</ng-template>
     </span>
   </div>
-  <div class="card-block">
-    <nav *ngIf="employees">
+  <div class="card-block" *ngIf="employees">
+    <nav>
       <div class="container">
         <div class="row">
           <div class="col-md-6">
@@ -36,6 +36,7 @@
     <table class="table">
       <thead>
         <tr>
+          <th>No</th>
           <th>Employee id</th>
           <th>Name</th>
           <th>Address</th>
@@ -45,15 +46,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let employee of employees">
+        <tr *ngFor="let employee of employees; let idx = index">
+          <td>{{ (currentPage * currentPageSize) + idx + 1 }}</td>
           <td>{{ employee.employeeId }}</td>
-          <td>{{ employee.name }}</td>
-          <td>{{ employee.address }}</td>
-          <td>{{ employee.office }}</td>
-          <td>{{ employee.phoneNumber }}</td>
+          <td>{{ employee.name | capitalize }}</td>
+          <td>{{ employee.address | capitalize }}</td>
+          <td>{{ employee.office | capitalize }}</td>
+          <td>{{ employee.phoneNumber | formatPhone }}</td>
           <td>{{ employee.email }}</td>
         </tr>
       </tbody>
     </table>
+  </div>
+  <div class="card-block card-danger" *ngIf="error">
+    Oops, could not get any data due to an error: {{ error }}
   </div>
 </div>

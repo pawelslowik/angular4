@@ -1,13 +1,13 @@
 <div class="card">
   <div class="card-header" [ngPlural]="totalCount">
-    Found address of {{ totalCount }} 
+    Found address of {{ totalCount }}
     <span>
       <ng-template ngPluralCase="1">customer</ng-template>
       <ng-template ngPluralCase="other">customers</ng-template>
     </span>
   </div>
-  <div class="card-block">
-    <nav *ngIf="customers">
+  <div class="card-block" *ngIf="customers">
+    <nav>
       <div class="container">
         <div class="row">
           <div class="col-md-6">
@@ -36,6 +36,7 @@
     <table class="table">
       <thead>
         <tr>
+          <th>No</th>
           <th>Customer id</th>
           <th>Name</th>
           <th>Address</th>
@@ -43,13 +44,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let customer of customers">
+        <tr *ngFor="let customer of customers; let idx = index">
+          <td>{{ (currentPage * currentPageSize) + idx + 1 }}</td>
           <td>{{ customer.customerId }}</td>
-          <td>{{ customer.name }}</td>
-          <td>{{ customer.address }}</td>
-          <td>{{ customer.phoneNumber }}</td>
+          <td>{{ customer.name | capitalize }}</td>
+          <td>{{ customer.address | capitalize }}</td>
+          <td>{{ customer.phoneNumber | formatPhone }}</td>
         </tr>
       </tbody>
     </table>
+  </div>
+  <div class="card-block card-danger" *ngIf="error">
+    Oops, could not get any data due to an error: {{ error }}
   </div>
 </div>
