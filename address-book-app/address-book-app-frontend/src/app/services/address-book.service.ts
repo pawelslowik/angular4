@@ -5,13 +5,13 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/observable/throw';
 import { AddressBookResponse } from '../classes/address-book-response';
 
-export class AddressBookService<AddressBookResponse> {
+export class AddressBookService<T extends AddressBookResponse<any>> {
 
   constructor(private httpClient: HttpClient, private endpoint) { }
   
-    getResponse(page: number, pageSize: number): Observable<AddressBookResponse> {
+    getResponse(page: number, pageSize: number): Observable<T> {
       return this.httpClient
-      .get<AddressBookResponse>("http://localhost:8080/addressbook/" + this.endpoint + "?" + "page=" + page + "&pageSize=" + pageSize)
+      .get<T>("http://localhost:8080/addressbook/" + this.endpoint + "?" + "page=" + page + "&pageSize=" + pageSize)
       .do(data => console.log("Received response=" + JSON.stringify(data)))
       .catch(this.handleError);
     }
