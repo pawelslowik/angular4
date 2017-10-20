@@ -9,6 +9,7 @@ import { CustomerAddressListComponent } from './components/customer-address-list
 import { EmployeeAddressListComponent } from './components/employee-address-list/employee-address-list.component';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { FormatPhonePipe } from './pipes/format-phone.pipe';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FormatPhonePipe } from './pipes/format-phone.pipe';
     CustomerAddressListComponent,
     EmployeeAddressListComponent,
     CapitalizePipe,
-    FormatPhonePipe
+    FormatPhonePipe,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

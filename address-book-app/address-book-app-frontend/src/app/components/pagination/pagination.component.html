@@ -1,0 +1,28 @@
+<div>
+  <nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <ul class="pagination float-left">
+            <li class="page-item disabled">
+              <span class="page-link">Page</span>
+            </li>
+            <li class="page-item" *ngFor="let page of pages" [ngClass]="{'active' : page == currentPage }">
+              <span class="page-link" (click)="onPageChanged(page)">{{ page + 1 }}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <ul class="pagination float-right">
+            <li class="page-item disabled">
+              <span class="page-link">Page size</span>
+            </li>
+            <li class="page-item" *ngFor="let pageSize of pageSizes" [ngClass]="{'active' : pageSize == currentPageSize }">
+              <span class="page-link" (click)="onPageSizeChanged(pageSize)">{{ pageSize }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>

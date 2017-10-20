@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Employee } from '../../classes/employee';
 import { EmployeesResponse } from '../../classes/employees-response';
 import { EmployeesService } from '../../services/employees.service';
+import { Pagination } from '../pagination/pagination';
 
 @Component({
   selector: 'employee-address-list',
@@ -11,30 +12,21 @@ import { EmployeesService } from '../../services/employees.service';
   styleUrls: ['./employee-address-list.component.css'],
   providers: [EmployeesService]
 })
-export class EmployeeAddressListComponent implements OnInit {
+export class EmployeeAddressListComponent {
 
-  pageSizes: number[] = [10, 20, 50];
-  employees: Employee[];
+  employees: Employee[] = [];
   currentPage: number = 0;
-  currentPageSize: number = this.pageSizes[0];
+  currentPageSize: number = 0;
   pages: number[];
-  totalCount: number;
+  totalCount: number = 0;
   error: string;
 
   constructor(private employeesService: EmployeesService) { }
 
-  ngOnInit() {
+  loadPage(pagination: Pagination): void {
+    this.currentPage = pagination.getPage();
+    this.currentPageSize = pagination.getPageSize();
     this.getEmployees(this.currentPage, this.currentPageSize);
-  }
-
-  loadPage(page: number): void {
-    this.currentPage = page;
-    this.getEmployees(this.currentPage, this.currentPageSize);
-  }
-
-  loadPageSize(pageSize: number): void {
-    this.currentPageSize = pageSize;
-    this.loadPage(0);
   }
 
   getEmployees(page: number, pageSize: number): void {
@@ -51,7 +43,6 @@ export class EmployeeAddressListComponent implements OnInit {
         this.error = error;
         this.employees = undefined;
         this.totalCount = 0;
-      }
-      );
+      });
   }
 }

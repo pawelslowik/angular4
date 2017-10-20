@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Customer } from '../../classes/customer';
 import { CustomersResponse } from '../../classes/customers-response';
 import { CustomersService } from '../../services/customers.service';
+import { Pagination } from '../pagination/pagination';
 
 @Component({
   selector: 'customer-address-list',
@@ -11,30 +12,21 @@ import { CustomersService } from '../../services/customers.service';
   styleUrls: ['./customer-address-list.component.css'],
   providers: [CustomersService]
 })
-export class CustomerAddressListComponent implements OnInit {
+export class CustomerAddressListComponent {
 
-  pageSizes: number[] = [10, 20, 50];
-  customers: Customer[];
+  customers: Customer[] = [];
   currentPage: number = 0;
-  currentPageSize: number = this.pageSizes[0];
+  currentPageSize: number = 0;
   pages: number[];
-  totalCount: number;
+  totalCount: number = 0;
   error: string;
 
   constructor(private customersService: CustomersService) { }
 
-  ngOnInit() {
+  loadPage(pagination: Pagination): void {
+    this.currentPage = pagination.getPage();
+    this.currentPageSize = pagination.getPageSize();
     this.getCustomers(this.currentPage, this.currentPageSize);
-  }
-
-  loadPage(page: number): void {
-    this.currentPage = page;
-    this.getCustomers(this.currentPage, this.currentPageSize);
-  }
-
-  loadPageSize(pageSize: number): void {
-    this.currentPageSize = pageSize;
-    this.loadPage(0);
   }
 
   getCustomers(page: number, pageSize: number): void {
@@ -50,7 +42,6 @@ export class CustomerAddressListComponent implements OnInit {
         this.error = error;
         this.customers = undefined;
         this.totalCount = 0;
-      }
-      );
+      });
   }
 }
