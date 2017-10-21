@@ -6,7 +6,7 @@
       <ng-template ngPluralCase="other">customers</ng-template>
     </span>
   </div>
-  <div class="card-block" *ngIf="customers">
+  <div class="card-block" *ngIf="entities">
     <pagination [pages]='pages' (notifyPaginationChanged)='loadPage($event)'></pagination>
     <table class="table">
       <thead>
@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let customer of customers; let idx = index">
+        <tr *ngFor="let customer of entities; let idx = index">
           <td>{{ (currentPage * currentPageSize) + idx + 1 }}</td>
           <td>{{ customer.customerId }}</td>
           <td>{{ customer.name | capitalize }}</td>
