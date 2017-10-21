@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 public abstract class RandomEntityGenerator<T> {
 
     private final String[] NAMES = {"bob", "tom", "max", "pat", "tim", "ken", "joe", "ben", "sam", "jim", "rob"};
+    private final String[] SURNAMES = {"smith", "kowalski", "williams", "jones", "white", "brown", "lee", "lopez",
+            "collins", "nowak", "harris", "krawczyk", "miller"};
     private final String[] ADDRESSES = {"warsaw", "berlin", "gdansk", "wroclaw", "krakow", "london", "hamburg", "chicago"};
     private ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
 
@@ -24,7 +26,8 @@ public abstract class RandomEntityGenerator<T> {
     public abstract Supplier<T> supplyRandomEntity();
 
     String generateName(){
-        return NAMES[threadLocalRandom.nextInt(NAMES.length)];
+        return NAMES[threadLocalRandom.nextInt(NAMES.length)] + " "
+                + SURNAMES[threadLocalRandom.nextInt(SURNAMES.length)];
     }
 
     String generateAddress(){
