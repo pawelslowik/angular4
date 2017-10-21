@@ -9,6 +9,8 @@ export class CapitalizePipe implements PipeTransform {
     if (value == null || value.length == 0) {
       return  "";
     }
-    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    return  value.split(" ").map(val => {
+      return val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
+    }).join(" ");
   }
 }
