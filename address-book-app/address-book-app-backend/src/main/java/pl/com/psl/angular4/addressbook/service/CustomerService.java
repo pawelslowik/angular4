@@ -6,24 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.com.psl.angular4.addressbook.entity.Customer;
 import pl.com.psl.angular4.addressbook.repository.CustomerRepository;
-import pl.com.psl.angular4.addressbook.util.RandomCustomerGenerator;
+import pl.com.psl.angular4.addressbook.util.entity.RandomCustomerGenerator;
+import pl.com.psl.angular4.addressbook.util.search.CustomerSearchExpressionProvider;
+import pl.com.psl.angular4.addressbook.util.search.SearchParameters;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by psl on 15.10.17
  */
 @Service
-public class CustomerService extends AddressBookService<Customer>{
+public class CustomerService extends AddressBookService<Customer> {
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomerService.class);
     private final RandomCustomerGenerator randomCustomerGenerator;
 
     @Autowired
-    public CustomerService(CustomerRepository repository, RandomCustomerGenerator randomCustomerGenerator) {
-        super(repository);
+    public CustomerService(CustomerRepository repository, RandomCustomerGenerator randomCustomerGenerator, CustomerSearchExpressionProvider customerSearchExpressionProvider) {
+        super(repository, customerSearchExpressionProvider);
         this.randomCustomerGenerator = randomCustomerGenerator;
     }
 
@@ -35,23 +36,18 @@ public class CustomerService extends AddressBookService<Customer>{
         LOG.info("Customer data initialization finished");
     }
 
-    public List<Customer> getCustomers() {
-        LOG.info("Getting all customers...");
-        List<Customer> customers = super.getEntities();
+    @Override
+    public List<Customer> getEntities(SearchParameters searchParameters) {
+        LOG.info("Getting customers by search parameters={}...", searchParameters);
+        List<Customer> customers = super.getEntities(searchParameters);
         LOG.info("Got customers={}", customers);
         return customers;
     }
 
-    public List<Customer> getCustomers(int page, int size) {
-        LOG.info("Getting all customers page={} with size={}...", page, size);
-        List<Customer> customers = super.getEntities(page, size);
-        LOG.info("Got customers={}", customers);
-        return customers;
-    }
-
-    public long countCustomers() {
-        LOG.info("Counting all customers...");
-        long count = super.countEntities();
+    @Override
+    public long countEntities(SearchParameters searchParameters) {
+        LOG.info("Counting customers by parameters={}...", searchParameters);
+        long count = super.countEntities(searchParameters);
         LOG.info("Counted {} customers", count);
         return count;
     }

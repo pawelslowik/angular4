@@ -1,4 +1,4 @@
-package pl.com.psl.angular4.addressbook.util;
+package pl.com.psl.angular4.addressbook.util.entity;
 
 import org.springframework.stereotype.Component;
 import pl.com.psl.angular4.addressbook.entity.Customer;

@@ -1,4 +1,4 @@
-package pl.com.psl.angular4.addressbook.util;
+package pl.com.psl.angular4.addressbook.util.entity;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;

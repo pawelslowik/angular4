@@ -1,13 +1,9 @@
-package pl.com.psl.angular4.addressbook.util;
+package pl.com.psl.angular4.addressbook.util.entity;
 
 import org.springframework.stereotype.Component;
-import pl.com.psl.angular4.addressbook.entity.Customer;
 import pl.com.psl.angular4.addressbook.entity.Employee;
 
-import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by psl on 15.10.17

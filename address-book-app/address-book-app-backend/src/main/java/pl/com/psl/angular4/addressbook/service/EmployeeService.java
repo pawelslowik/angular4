@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.com.psl.angular4.addressbook.entity.Employee;
 import pl.com.psl.angular4.addressbook.repository.EmployeeRepository;
-import pl.com.psl.angular4.addressbook.util.RandomEmployeeGenerator;
+import pl.com.psl.angular4.addressbook.util.entity.RandomEmployeeGenerator;
+import pl.com.psl.angular4.addressbook.util.search.EmployeeSearchExpressionProvider;
+import pl.com.psl.angular4.addressbook.util.search.SearchParameters;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,8 +23,8 @@ public class EmployeeService extends AddressBookService<Employee> {
     private final RandomEmployeeGenerator randomEmployeeGenerator;
 
     @Autowired
-    EmployeeService(EmployeeRepository repository, RandomEmployeeGenerator randomEmployeeGenerator) {
-        super(repository);
+    EmployeeService(EmployeeRepository repository, RandomEmployeeGenerator randomEmployeeGenerator, EmployeeSearchExpressionProvider employeeSearchExpressionProvider) {
+        super(repository, employeeSearchExpressionProvider);
         this.randomEmployeeGenerator = randomEmployeeGenerator;
     }
 
@@ -35,23 +36,18 @@ public class EmployeeService extends AddressBookService<Employee> {
         LOG.info("Employee data initialization finished");
     }
 
-    public List<Employee> getEmployees() {
-        LOG.info("Getting all employees...");
-        List<Employee> employees = super.getEntities();
+    @Override
+    public List<Employee> getEntities(SearchParameters searchParameters) {
+        LOG.info("Getting all employees by search parameters={}...", searchParameters);
+        List<Employee> employees = super.getEntities(searchParameters);
         LOG.info("Got employees={}", employees);
         return employees;
     }
 
-    public List<Employee> getEmployees(int page, int size) {
-        LOG.info("Getting all employees page={} with size={}...", page, size);
-        List<Employee> employees = super.getEntities(page, size);
-        LOG.info("Got employees={}", employees);
-        return employees;
-    }
-
-    public long countEmployees() {
-        LOG.info("Counting all employees...");
-        long count = super.countEntities();
+    @Override
+    public long countEntities(SearchParameters searchParameters) {
+        LOG.info("Counting employees by search parameters={}...", searchParameters);
+        long count = super.countEntities(searchParameters);
         LOG.info("Counted {} employees", count);
         return count;
     }
