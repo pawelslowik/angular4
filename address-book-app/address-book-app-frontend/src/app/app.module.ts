@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { CustomerAddressListComponent } from './components/customer-address-list/customer-address-list.component';
@@ -10,6 +11,7 @@ import { EmployeeAddressListComponent } from './components/employee-address-list
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { FormatPhonePipe } from './pipes/format-phone.pipe';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { SearchDropdownComponent } from './components/search-dropdown/search-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +20,13 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     EmployeeAddressListComponent,
     CapitalizePipe,
     FormatPhonePipe,
-    PaginationComponent
+    PaginationComponent,
+    SearchDropdownComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    FormsModule,
     HttpClientModule,
     RouterModule.forRoot([
       {

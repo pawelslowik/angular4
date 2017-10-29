@@ -4,6 +4,7 @@ import { Headers, Http } from '@angular/http';
 import { Pagination } from './pagination/pagination';
 import { AddressBookService } from '../services/address-book.service';
 import { AddressBookResponse } from '../classes/address-book-response';
+import { SearchParameter } from './search-dropdown/search-parameter';
 
 export class GenericAddressList<T extends AddressBookService<AddressBookResponse<any>>> {
     
@@ -13,17 +14,34 @@ export class GenericAddressList<T extends AddressBookService<AddressBookResponse
       pages: number[];
       totalCount: number = 0;
       error: string;
+      searchParameters: SearchParameter[] = [];
     
       constructor(private addressBookService: T) { }
     
-      loadPage(pagination: Pagination): void {
+      updatePaginationAndLoadPage(pagination: Pagination): void {
         this.currentPage = pagination.getPage();
         this.currentPageSize = pagination.getPageSize();
-        this.getEntities(this.currentPage, this.currentPageSize);
+        this.getEntities(this.currentPage, this.currentPageSize, this.searchParameters);
       }
+
+      updateSearchParameterAndLoadPage(searchParameter: SearchParameter): void {
+        this.searchParameters = this.searchParameters
+        .filter(param => param.getParameterName() != searchParameter.getParameterName())
+        if(searchParameter.getParameterValue().trim().length > 0){
+          this.searchParameters.push(searchParameter);
+        }
+        this.getEntities(this.currentPage, this.currentPageSize, this.searchParameters);
+      }
+
+      removeSearchParameterAndLoadPage(searchParameter: SearchParameter): void {
+        this.searchParameters = this.searchParameters
+        .filter(param => param.getParameterName() != searchParameter.getParameterName())
+        this.getEntities(this.currentPage, this.currentPageSize, this.searchParameters);
+      }
+
     
-      getEntities(page: number, pageSize: number): void {
-        this.addressBookService.getResponse(page, pageSize)
+      getEntities(page: number, pageSize: number, searchParamters: SearchParameter[]): void {
+        this.addressBookService.getResponse(page, pageSize, searchParamters)
           .subscribe(
             addressBookResponse => {
             this.entities = addressBookResponse.entities;

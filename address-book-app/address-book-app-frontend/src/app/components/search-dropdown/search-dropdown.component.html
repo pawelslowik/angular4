@@ -1,0 +1,14 @@
+<div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+    data-toggle="dropdown">
+    {{ parameterHeader }}
+  </button>
+  <div class="dropdown-menu">
+    <div class="input-group">
+      <input [(ngModel)]='parameterValue' type="text" class="form-control" placeholder="Search for..." (keyup.enter)='onParameterValueChanged()'>
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="button" (click)='onParameterValueChanged()'>Go!</button>
+      </span>
+    </div>
+  </div>
+</div>

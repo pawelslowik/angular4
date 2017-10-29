@@ -7,15 +7,36 @@
     </span>
   </div>
   <div class="card-block" *ngIf="entities">
-    <pagination [pages]='pages' (notifyPaginationChanged)='loadPage($event)'></pagination>
+    <pagination [pages]='pages' (notifyPaginationChanged)='updatePaginationAndLoadPage($event)'></pagination>
+    <div class="card card-outline-danger" *ngIf="searchParameters.length > 0">
+        <div class="card-block">
+          <div *ngFor="let searchParameter of searchParameters">
+            <button type="button" class="btn btn-danger close" (click)='removeSearchParameterAndLoadPage(searchParameter)'>
+              <span>{{searchParameter.parameterHeader}}={{searchParameter.parameterValue}} &times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
     <table class="table">
       <thead>
         <tr>
           <th>No</th>
-          <th>Customer id</th>
-          <th>Name</th>
-          <th>Address</th>
-          <th>Phone number</th>
+          <th>
+            <search-dropdown [parameterHeader]='"Customer id"' [parameterName]='"customerId"' (notifyParameterValueChanged)='updateSearchParameterAndLoadPage($event)'>
+            </search-dropdown>
+          </th>
+          <th>
+            <search-dropdown [parameterHeader]='"Name"' [parameterName]='"name"' (notifyParameterValueChanged)='updateSearchParameterAndLoadPage($event)'>
+            </search-dropdown>
+          </th>
+          <th>
+            <search-dropdown [parameterHeader]='"Address"' [parameterName]='"address"' (notifyParameterValueChanged)='updateSearchParameterAndLoadPage($event)'>
+            </search-dropdown>
+          </th>
+          <th>
+            <search-dropdown [parameterHeader]='"Phone number"' [parameterName]='"phoneNumber"' (notifyParameterValueChanged)='updateSearchParameterAndLoadPage($event)'>
+            </search-dropdown>
+          </th>
         </tr>
       </thead>
       <tbody>
