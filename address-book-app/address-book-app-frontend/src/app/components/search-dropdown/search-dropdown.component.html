@@ -3,9 +3,10 @@
     data-toggle="dropdown">
     {{ parameterHeader }}
   </button>
-  <div class="dropdown-menu">
+  <div class="dropdown-menu" [ngClass]="{'has-danger' : !inputValid}">
     <div class="input-group">
-      <input [(ngModel)]='parameterValue' type="text" class="form-control" placeholder="Search for..." (keyup.enter)='onParameterValueChanged()'>
+      <input [(ngModel)]='parameterValue' type="text" class="form-control" placeholder="Search for..." 
+      (keyup.enter)='closeDropdown();onParameterValueChanged()'>
       <span class="input-group-btn">
         <button class="btn btn-primary" type="button" (click)='onParameterValueChanged()'>Go!</button>
       </span>

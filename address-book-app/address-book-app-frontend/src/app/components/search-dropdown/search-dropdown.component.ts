@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { SearchParameter } from './search-parameter';
+import { SearchParameter } from '../../classes/search-parameter';
+declare var jquery:any;
+declare var $ :any;
 
 @Component({
   selector: 'search-dropdown',
@@ -15,6 +17,7 @@ export class SearchDropdownComponent implements OnInit {
   parameterValue: string = '';
   @Output()
   notifyParameterValueChanged: EventEmitter<SearchParameter> = new EventEmitter<SearchParameter>();
+  inputValid: boolean = true;
 
   constructor() { }
 
@@ -22,8 +25,11 @@ export class SearchDropdownComponent implements OnInit {
   }
 
   onParameterValueChanged(): void {
-    console.log("emitting parameterName=" + this.parameterName + ", parameterValue=" + this.parameterValue);
     this.notifyParameterValueChanged.emit(new SearchParameter(this.parameterHeader, this.parameterName, this.parameterValue));
     this.parameterValue = '';
+  }
+
+  closeDropdown(): void{
+    $(".dropdown").removeClass("show");
   }
 }

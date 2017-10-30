@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Pagination } from './pagination';
+import { Pagination } from '../../classes/pagination';
 
 @Component({
   selector: 'pagination',

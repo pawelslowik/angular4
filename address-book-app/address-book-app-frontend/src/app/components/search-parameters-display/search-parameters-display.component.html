@@ -1,0 +1,9 @@
+<div class="card card-outline-danger" *ngIf="searchParameters.length > 0">
+  <div class="card-block">
+    <div *ngFor="let searchParameter of searchParameters">
+      <button type="button" class="btn btn-danger close" (click)='onSearchParameterRemoved(searchParameter)'>
+        <span>{{searchParameter.parameterHeader}}={{searchParameter.parameterValue}} &times;</span>
+      </button>
+    </div>
+  </div>
+</div>

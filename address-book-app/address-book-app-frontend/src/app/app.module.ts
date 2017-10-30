@@ -12,6 +12,7 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { FormatPhonePipe } from './pipes/format-phone.pipe';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { SearchDropdownComponent } from './components/search-dropdown/search-dropdown.component';
+import { SearchParametersDisplayComponent } from './components/search-parameters-display/search-parameters-display.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SearchDropdownComponent } from './components/search-dropdown/search-dro
     CapitalizePipe,
     FormatPhonePipe,
     PaginationComponent,
-    SearchDropdownComponent
+    SearchDropdownComponent,
+    SearchParametersDisplayComponent
   ],
   imports: [
     BrowserModule,
