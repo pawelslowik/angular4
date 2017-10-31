@@ -3,12 +3,12 @@
     data-toggle="dropdown">
     {{ parameterHeader }}
   </button>
-  <div class="dropdown-menu" [ngClass]="{'has-danger' : !inputValid}">
+  <div class="dropdown-menu" [ngClass]="{'has-danger' : !parameterValueValid}">
     <div class="input-group">
       <input [(ngModel)]='parameterValue' type="text" class="form-control" placeholder="Search for..." 
-      (keyup.enter)='closeDropdown();onParameterValueChanged()'>
+      pattern="{{ parameterValueRegex }}" #input="ngModel" (keyup.enter)='closeDropdown();onParameterValueChanged()' (keyup)="setParameterValueValid(!(input.invalid && (input.dirty || input.touched)))">
       <span class="input-group-btn">
-        <button class="btn btn-primary" type="button" (click)='onParameterValueChanged()'>Go!</button>
+        <button class="btn btn-primary" [ngClass]="{'btn-danger disabled' : !parameterValueValid}" type="button" (click)='onParameterValueChanged()'>Go!</button>
       </span>
     </div>
   </div>

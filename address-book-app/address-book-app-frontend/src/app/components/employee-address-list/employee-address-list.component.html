@@ -30,7 +30,7 @@
             </search-dropdown>
           </th>
           <th>
-            <search-dropdown [parameterHeader]='"Phone number"' [parameterName]='"phoneNumber"' (notifyParameterValueChanged)='updateSearchParameterAndLoadPage($event)'>
+            <search-dropdown [parameterHeader]='"Phone number"' [parameterName]='"phoneNumber"' [parameterValueRegex]='"[\\d\\s]\*"' (notifyParameterValueChanged)='updateSearchParameterAndLoadPage($event)'>
             </search-dropdown>
           </th>
           <th>

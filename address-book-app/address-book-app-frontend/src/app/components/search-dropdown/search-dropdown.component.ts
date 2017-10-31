@@ -15,9 +15,11 @@ export class SearchDropdownComponent implements OnInit {
   @Input()
   parameterName: string;
   parameterValue: string = '';
+  @Input()
+  parameterValueRegex: string = '.*';
+  parameterValueValid: boolean = true;
   @Output()
   notifyParameterValueChanged: EventEmitter<SearchParameter> = new EventEmitter<SearchParameter>();
-  inputValid: boolean = true;
 
   constructor() { }
 
@@ -25,11 +27,19 @@ export class SearchDropdownComponent implements OnInit {
   }
 
   onParameterValueChanged(): void {
-    this.notifyParameterValueChanged.emit(new SearchParameter(this.parameterHeader, this.parameterName, this.parameterValue));
-    this.parameterValue = '';
+    if(this.parameterValueValid){
+      this.notifyParameterValueChanged.emit(new SearchParameter(this.parameterHeader, this.parameterName, this.parameterValue));
+      this.parameterValue = '';
+    }
   }
 
   closeDropdown(): void{
-    $(".dropdown").removeClass("show");
+    if(this.parameterValueValid){
+      $(".dropdown").removeClass("show");
+    }
+  }
+
+  setParameterValueValid(parameterValueValid: boolean): void {
+    this.parameterValueValid = parameterValueValid;
   }
 }
