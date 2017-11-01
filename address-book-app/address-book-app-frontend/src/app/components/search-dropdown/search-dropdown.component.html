@@ -11,5 +11,8 @@
         <button class="btn btn-primary" [ngClass]="{'btn-danger disabled' : !parameterValueValid}" type="button" (click)='onParameterValueChanged()'>Go!</button>
       </span>
     </div>
+    <div class="badge badge-danger" *ngIf="!parameterValueValid">
+      Expected  format: {{ parameterValueRegex }}
+    </div>
   </div>
 </div>
