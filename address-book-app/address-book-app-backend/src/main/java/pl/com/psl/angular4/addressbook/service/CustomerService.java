@@ -51,4 +51,13 @@ public class CustomerService extends AddressBookService<Customer> {
         LOG.info("Counted {} customers", count);
         return count;
     }
+
+    @Override
+    public Customer createEntity(Customer entity) {
+        String customerId = randomCustomerGenerator.generateEntityId("CUS-");
+        LOG.info("Creating customer={} with generated customerId={}", entity, customerId);
+        Customer customer = super.createEntity(new Customer(customerId, entity.getName(), entity.getAddress(), entity.getPhoneNumber()));
+        LOG.info("Customer={} created!", customer);
+        return customer;
+    }
 }

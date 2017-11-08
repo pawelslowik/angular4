@@ -51,4 +51,13 @@ public class EmployeeService extends AddressBookService<Employee> {
         LOG.info("Counted {} employees", count);
         return count;
     }
+
+    @Override
+    public Employee createEntity(Employee entity) {
+        String employeeId = randomEmployeeGenerator.generateEntityId("EMP-");
+        LOG.info("Creating employee={} with generated employeeId={}", entity, employeeId);
+        Employee employee = super.createEntity(new Employee(employeeId, entity.getName(), entity.getAddress(), entity.getOffice(), entity.getPhoneNumber()));
+        LOG.info("Employee={} created!", employee);
+        return employee;
+    }
 }

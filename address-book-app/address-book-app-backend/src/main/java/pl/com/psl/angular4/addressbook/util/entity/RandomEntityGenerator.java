@@ -41,7 +41,7 @@ public abstract class RandomEntityGenerator<T> {
                 .reduce("", String::concat);
     }
 
-    String generateEntityId(String prefix){
+    public String generateEntityId(String prefix){
         return threadLocalRandom
                 .ints(6, 0, 10)
                 .mapToObj(String::valueOf)

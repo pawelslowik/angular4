@@ -38,6 +38,12 @@ public class AddressBookController {
         return new ResponseEntity<>(addressBookResponse, HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/customers", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<Customer> createCustomer(@RequestBody Customer customer){
+        Customer createdCustomer = customerService.createEntity(customer);
+        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
+    }
+
     @RequestMapping(path = "/employees", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<AddressBookResponse<Employee>> getEmployees(@RequestParam Map<String, String> params) {
         SearchParameters searchParameters = new SearchParameters(params);
@@ -47,5 +53,11 @@ public class AddressBookController {
                         totalCount,
                         employeeService.getEntities(searchParameters));
         return new ResponseEntity<>(addressBookResponse, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/employees", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<Employee> createEmployee(@RequestBody Employee employee){
+        Employee createdEmployee = employeeService.createEntity(employee);
+        return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
 }

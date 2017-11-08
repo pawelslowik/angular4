@@ -46,6 +46,10 @@ abstract class AddressBookService<T> {
         return countEntities();
     }
 
+    T createEntity(T entity){
+        return repository.save(entity);
+    }
+
     private List<T> getEntities() {
         return toEntitiesList(repository.findAll());
     }
