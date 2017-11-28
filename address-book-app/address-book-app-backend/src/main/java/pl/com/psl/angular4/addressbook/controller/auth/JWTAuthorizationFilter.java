@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static pl.com.psl.angular4.addressbook.controller.auth.JWTConstants.HEADER_STRING;
+import static pl.com.psl.angular4.addressbook.controller.auth.JWTConstants.AUTHORIZATION_HEADER;
 import static pl.com.psl.angular4.addressbook.controller.auth.JWTConstants.SECRET;
 import static pl.com.psl.angular4.addressbook.controller.auth.JWTConstants.TOKEN_PREFIX;
 
@@ -34,7 +34,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-        String header = request.getHeader(HEADER_STRING);
+        String header = request.getHeader(AUTHORIZATION_HEADER);
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
             UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -43,7 +43,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_STRING);
+        String token = request.getHeader(AUTHORIZATION_HEADER);
         if (token != null) {
             String subject = Jwts.parser()
                     .setSigningKey(SECRET.getBytes())

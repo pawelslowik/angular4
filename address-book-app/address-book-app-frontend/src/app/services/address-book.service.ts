@@ -6,6 +6,8 @@ import 'rxjs/add/observable/throw';
 import { AddressBookResponse } from '../classes/address-book-response';
 import { SearchParameter } from './../classes/search-parameter';
 import { Pagination } from '../classes/pagination';
+import { HttpHeaders } from '@angular/common/http';
+import { CurrentUser } from '../classes/current-user';
 
 export class AddressBookService<T extends AddressBookResponse<any>> {
 
@@ -15,8 +17,11 @@ export class AddressBookService<T extends AddressBookResponse<any>> {
     let url = "http://localhost:8080/addressbook/" + this.endpoint + "?"
       + this.buildPaginationParametersURL(pagination)
       + this.buildSearchParametersURL(searchParameters);
+      let currentUser: CurrentUser = JSON.parse(window.localStorage.getItem("currentUser"));
     return this.httpClient
-      .get<T>(url)
+      .get<T>(url, {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + currentUser.token)
+      })
       .do(data => console.log("URL=" + url + " returned response=" + JSON.stringify(data)))
       .catch(this.handleError);
   }

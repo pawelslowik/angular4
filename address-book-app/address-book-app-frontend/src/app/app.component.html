@@ -1,19 +1,14 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <br>
-  <br>
-  <h1>
-    <a href="#"><span  class="badge badge-primary">Welcome to {{ title }}</span></a>
-  </h1>
-  <br>
-  <br>
-  <ul class="nav nav-pills nav-justified  ">
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/customers" routerLinkActive="active">Customers</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/employees" routerLinkActive="active">Employees</a>
-    </li>
-  </ul>
-  <router-outlet></router-outlet>
+<div>
+  <nav class="navbar navbar-inverse bg-primary">
+    <h3>
+      <a href="#">
+        <span class="badge badge-primary">{{ title }}</span>
+      </a>
+    </h3>
+  </nav>
+  <div style="text-align:center">
+    <br>
+    <br>
+    <router-outlet></router-outlet>
+  </div>
 </div>

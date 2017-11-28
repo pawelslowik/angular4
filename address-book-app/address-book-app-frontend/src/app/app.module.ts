@@ -13,6 +13,10 @@ import { FormatPhonePipe } from './pipes/format-phone.pipe';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { SearchDropdownComponent } from './components/search-dropdown/search-dropdown.component';
 import { SearchParametersDisplayComponent } from './components/search-parameters-display/search-parameters-display.component';
+import { LoginComponent } from './components/login/login.component';
+import { AddressListDisplayComponent } from './components/address-list-display/address-list-display.component';
+import { LoginGuardService } from './services/login-guard.service';
+import { LoginService } from './services/login.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,9 @@ import { SearchParametersDisplayComponent } from './components/search-parameters
     FormatPhonePipe,
     PaginationComponent,
     SearchDropdownComponent,
-    SearchParametersDisplayComponent
+    SearchParametersDisplayComponent,
+    LoginComponent,
+    AddressListDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -32,16 +38,37 @@ import { SearchParametersDisplayComponent } from './components/search-parameters
     HttpClientModule,
     RouterModule.forRoot([
       {
-        path: 'customers',
-        component: CustomerAddressListComponent 
+        path: '',
+        redirectTo: 'address-list',
+        pathMatch: 'full'
       },
       {
-        path: 'employees',
-        component: EmployeeAddressListComponent
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'address-list',
+        component: AddressListDisplayComponent,
+        canActivate: [ LoginGuardService ],
+        children: [
+          {
+            path: '',
+            redirectTo: 'address-list',
+            pathMatch: 'full'   
+          },
+          {
+            path: 'customers',
+            component: CustomerAddressListComponent 
+          },
+          {
+            path: 'employees',
+            component: EmployeeAddressListComponent
+          }
+        ]
       }
     ])
   ],
-  providers: [],
+  providers: [LoginGuardService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

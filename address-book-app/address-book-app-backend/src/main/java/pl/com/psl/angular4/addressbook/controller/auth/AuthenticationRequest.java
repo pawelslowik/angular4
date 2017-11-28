@@ -3,21 +3,21 @@ package pl.com.psl.angular4.addressbook.controller.auth;
 /**
  * Created by psl on 07.11.17
  */
-public class User {
+public class AuthenticationRequest {
 
-    private String name;
+    private String userName;
     private String password;
 
-    public User(String name, String password) {
-        this.name = name;
+    public AuthenticationRequest(String userName, String password) {
+        this.userName = userName;
         this.password = password;
     }
 
-    public User() {
+    public AuthenticationRequest() {
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
     public String getPassword() {
@@ -26,8 +26,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
+        return "AuthenticationRequest{" +
+                "userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

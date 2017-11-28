@@ -1,0 +1,14 @@
+<form #loginForm="ngForm" (ngSubmit)="onLogin(); loginForm.reset();">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input name="username" id="username" type="text" [(ngModel)]="username" required pattern="[A-Za-z0-9]+">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input  name="password" id="password" type="password" [(ngModel)]="password" required>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="loginForm.form.invalid">login</button>
+    <div *ngIf="error" class="alert alert-danger" role="alert">
+        <p>{{error}}</p>
+    </div>
+</form>

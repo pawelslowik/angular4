@@ -41,13 +41,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
         try {
-            User user = new ObjectMapper()
-                    .readValue(request.getInputStream(), User.class);
-            LOG.info("Attempting authentication with user={}...", user.getName());
+            AuthenticationRequest authenticationRequest = new ObjectMapper()
+                    .readValue(request.getInputStream(), AuthenticationRequest.class);
+            LOG.info("Attempting authentication with authenticationRequest={}...", authenticationRequest.getUserName());
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            user.getName(),
-                            user.getPassword(),
+                            authenticationRequest.getUserName(),
+                            authenticationRequest.getPassword(),
                             Collections.emptyList())
             );
         } catch (IOException e) {
@@ -71,7 +71,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .compact();
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
-        LOG.info("Token={} added to {} header", token, HEADER_STRING);
+        response.addHeader(AUTHORIZATION_HEADER, TOKEN_PREFIX + token);
+        response.addHeader(ACCESS_CONTROL_EXPOSE_HEADERS, AUTHORIZATION_HEADER);
+        LOG.info("Token={} added to {} header", token, AUTHORIZATION_HEADER);
     }
 }
