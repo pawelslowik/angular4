@@ -7,9 +7,13 @@ import 'rxjs/add/observable/throw';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { HttpResponse } from '@angular/common/http';
+import { CurrentUser } from '../classes/current-user';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class LoginService {
+
+  private subject: Subject<CurrentUser> = new Subject<CurrentUser>();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -26,12 +30,22 @@ export class LoginService {
     .catch(this.handleError)
   }
 
-  logout(username: string): void {
-    window.localStorage.removeItem("currentUser");  
+  removeCurrentUser(): void {
+    window.localStorage.removeItem("currentUser");
+    this.subject.next(null);
   }
 
-  getCurrentUser(): string {
-    return window.localStorage.getItem("currentUser");
+  setCurrentUser(currentUser: CurrentUser): void {
+    window.localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    this.subject.next(currentUser);
+  }
+
+  getCurrentUser(): CurrentUser {
+    return JSON.parse(window.localStorage.getItem("currentUser"));
+  }
+
+  observeCurrentUser(): Observable<CurrentUser> {
+    return this.subject.asObservable();
   }
 
   private handleError(err: HttpErrorResponse) {

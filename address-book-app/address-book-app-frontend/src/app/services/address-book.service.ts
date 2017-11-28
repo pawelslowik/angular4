@@ -8,19 +8,19 @@ import { SearchParameter } from './../classes/search-parameter';
 import { Pagination } from '../classes/pagination';
 import { HttpHeaders } from '@angular/common/http';
 import { CurrentUser } from '../classes/current-user';
+import { LoginService } from './login.service';
 
 export class AddressBookService<T extends AddressBookResponse<any>> {
 
-  constructor(private httpClient: HttpClient, private endpoint) { }
+  constructor(private httpClient: HttpClient, private endpoint, private loginService: LoginService) { }
 
   getResponse(pagination: Pagination, searchParameters: SearchParameter[]): Observable<T> {
     let url = "http://localhost:8080/addressbook/" + this.endpoint + "?"
       + this.buildPaginationParametersURL(pagination)
       + this.buildSearchParametersURL(searchParameters);
-      let currentUser: CurrentUser = JSON.parse(window.localStorage.getItem("currentUser"));
     return this.httpClient
       .get<T>(url, {
-        headers: new HttpHeaders().set('Authorization', 'Bearer ' + currentUser.token)
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.loginService.getCurrentUser().token)
       })
       .do(data => console.log("URL=" + url + " returned response=" + JSON.stringify(data)))
       .catch(this.handleError);

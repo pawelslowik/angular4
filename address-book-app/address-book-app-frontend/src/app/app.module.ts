@@ -17,6 +17,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AddressListDisplayComponent } from './components/address-list-display/address-list-display.component';
 import { LoginGuardService } from './services/login-guard.service';
 import { LoginService } from './services/login.service';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LoginService } from './services/login.service';
     SearchDropdownComponent,
     SearchParametersDisplayComponent,
     LoginComponent,
-    AddressListDisplayComponent
+    AddressListDisplayComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +47,10 @@ import { LoginService } from './services/login.service';
       {
         path: 'login',
         component: LoginComponent
+      },
+      {
+        path: 'logout',
+        component: LogoutComponent
       },
       {
         path: 'address-list',

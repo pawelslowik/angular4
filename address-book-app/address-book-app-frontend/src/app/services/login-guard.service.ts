@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { LoginService } from './login.service';
+import { CurrentUser } from '../classes/current-user';
 
 @Injectable()
 export class LoginGuardService implements CanActivate {
@@ -11,9 +12,8 @@ export class LoginGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     this.currentUrl = state.url;
-    let currentUser = this.loginService.getCurrentUser();
+    let currentUser: CurrentUser = this.loginService.getCurrentUser();
     let canActivate = currentUser != undefined;
-    console.log("user=" + currentUser + " can activate url=" + this.currentUrl + ":" + canActivate);
     if(canActivate){
       return true;
     }

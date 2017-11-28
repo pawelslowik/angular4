@@ -19,6 +19,9 @@ export class LoginComponent implements OnInit {
     private router: Router, private loginGuardService: LoginGuardService) { }
 
   ngOnInit() {
+    if(this.loginService.getCurrentUser()){
+      this.router.navigate(['address-list']);
+    }
   }
 
   onLogin(): void {
@@ -28,8 +31,7 @@ export class LoginComponent implements OnInit {
         if(authHeader){
           let token: string = authHeader.replace("Bearer", "").replace(" ", "");
           if(token){
-            let currentUser = new CurrentUser(this.username, token);
-            window.localStorage.setItem("currentUser", JSON.stringify(currentUser));
+            this.loginService.setCurrentUser(new CurrentUser(this.username, token));
             if (this.loginGuardService.currentUrl) {
               this.router.navigateByUrl(this.loginGuardService.currentUrl);
             }
